@@ -43,7 +43,7 @@ COPY --from=builder /install /usr/local
 # RUN apk add --update nodejs npm
 
 COPY service/test5 /test5
-COPY service/reports /reports
+COPY service/emojis /emojis
 COPY service/manage.py /
 COPY service/data /data
 
