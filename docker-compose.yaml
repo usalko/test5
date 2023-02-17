@@ -1,0 +1,73 @@
+version: '3.9'
+
+services:
+
+  # postgresdb:
+  #   image: postgres:alpine
+  #   restart: always
+  #   mem_limit: 256m
+  #   environment:
+  #     POSTGRES_DB: phytonyms.dev
+  #     POSTGRES_USER: phytonyms.dev
+  #     POSTGRES_PASSWORD: phytonyms.dev
+  #   logging:
+  #     options:
+  #       max-size: 10m
+  #       max-file: "3"
+  #   volumes:
+  #     - .data/postgresdb:/var/lib/postgresql/data
+  #     - .logs/postgresdb:/var/logs
+  #     - .tmp/postgresdb:/tmp
+  #     - type: bind
+  #       source: .history/postgresdb/.bash_history
+  #       target: /root/.ash_history
+  #     # copy the sql script to create tables
+  #     # - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+  service:
+    image: "usalko/test5:v1${DOCKER_TAG_SUFFIX}"
+    restart: always
+    mem_limit: 256m
+    environment:
+      # DJANGO_PRODUCTION: 'True'
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+    volumes:
+      - .logs/service:/var/log
+      - .tmp/service:/tmp
+      - type: bind
+        source: .history/service/.bash_history
+        target: /root/.ash_history
+
+  front:
+    image: "usalko/test5:front${DOCKER_TAG_SUFFIX}"
+    restart: always
+    mem_limit: 64m
+    volumes:
+      - .logs/front:/var/log
+      - .tmp/front:/tmp
+      - ./.data/certbot/www:/var/www/certbot/:ro
+      - ./.data/certbot/conf/:/etc/nginx/ssl/:ro
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/nginx.conf
+      - type: bind
+        source: .history/front/.bash_history
+        target: /root/.ash_history
+    depends_on:
+      - service
+    environment:
+      EXPOSE_PORT: "${HTTP_PORT}"
+      HOST_HOSTNAME: "${HOST_HOSTNAME}"
+      PUBLIC_DOMAIN: "${PUBLIC_DOMAIN}"
+      SERVER_PORT: "${SERVER_PORT}"
+      SERVER_SSL: "${SERVER_SSL}"
+    ports:
+      - "${HTTP_PORT}:80"
+      - "${SERVER_PORT}:443"
+
+  certbot:
+    image: usalko/certbot
+    volumes:
+      - ./.data/certbot/regru.ini:/etc/letsencrypt/regru.ini:ro
+      - ./.data/certbot/www/:/var/www/certbot/:rw
+      - ./.data/certbot/conf/:/etc/letsencrypt/:rw
