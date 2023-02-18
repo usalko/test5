@@ -3,8 +3,6 @@ from django.db import models
 from .tg_user import TgUser
 from .tg_chat import TgChat
 
-# Create your models here.
-
 
 class TgMessage(models.Model):
     stamp = models.DateTimeField('First datetime of message')

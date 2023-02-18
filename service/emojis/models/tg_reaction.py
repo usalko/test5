@@ -2,8 +2,6 @@ from django.db import models
 from .tg_message import TgMessage
 from .tg_input_peer import TgInputPeer
 
-# Create your models here.
-
 
 class TgReaction(models.Model):
     
@@ -14,6 +12,8 @@ class TgReaction(models.Model):
         EMOJI = 'emoji', 'emoji'
         # Custom emoji message reaction.
         CUSTOM_EMOJI = 'custom_emoji', 'custom emoji'
+        
+    stamp = models.DateTimeField('Datetime of reaction request')
 
     peer_id: int
     peer = models.ForeignKey[TgInputPeer](
