@@ -31,6 +31,31 @@ class TgInputPeerOrder:
     peer: Optional['TgInputPeerOrder']
 
 
+@gql.django.order(emojis_models.TgMessageViews)
+class TgMessageViewsOrder:
+
+    id: gql.auto
+    stamp: gql.auto
+    peer: Optional['TgInputPeerOrder']
+    message: Optional['TgMessageOrder']
+    views: gql.auto
+    forwards: gql.auto
+
+
+@gql.django.order(emojis_models.TgMessageReplies)
+class TgMessageRepliesOrder:
+
+    id: gql.auto
+    message_views: Optional['TgMessageViewsOrder']
+    comments: gql.auto
+    replies: gql.auto
+    replies_pts: gql.auto
+    recent_repliers: Optional['TgInputPeerOrder']
+    channel: Optional['TgChatOrder']
+    max: Optional['TgMessageOrder']
+    read_max: Optional['TgMessageOrder']
+
+
 @gql.django.order(emojis_models.TgMessage)
 class TgMessageOrder:
 

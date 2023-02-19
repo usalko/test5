@@ -1,5 +1,5 @@
 # types.py
-from typing import Optional
+from typing import Optional, List
 
 from django.contrib.auth import models as auth_models
 from emojis import models as emojis_models
@@ -31,6 +31,31 @@ class TgInputPeer(relay.Node):
     user: Optional['TgUser']
     channel: Optional['TgChat']
     peer: Optional['TgInputPeer']
+
+
+@gql.django.type(emojis_models.TgMessageViews)
+class TgMessageViews(relay.Node):
+
+    id: gql.auto
+    stamp: gql.auto
+    peer: Optional['TgInputPeer']
+    message: Optional['TgMessage']
+    views: gql.auto
+    forwards: gql.auto
+
+
+@gql.django.type(emojis_models.TgMessageReplies)
+class TgMessageReplies(relay.Node):
+
+    id: gql.auto
+    message_views: Optional['TgMessageViews']
+    comments: gql.auto
+    replies: gql.auto
+    replies_pts: gql.auto
+    recent_repliers: List['TgInputPeer']
+    channel: Optional['TgChat']
+    max: Optional['TgMessage']
+    read_max: Optional['TgMessage']
 
 
 @gql.django.type(emojis_models.TgMessage)

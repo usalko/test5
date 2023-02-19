@@ -31,6 +31,31 @@ class TgInputPeerFilters:
     peer: Optional['TgInputPeerFilters']
 
 
+@gql.django.filter(emojis_models.TgMessageViews, lookups=True)
+class TgMessageViewsFilters:
+
+    id: gql.auto
+    stamp: gql.auto
+    peer: Optional['TgInputPeerFilters']
+    message: Optional['TgMessageFilters']
+    views: gql.auto
+    forwards: gql.auto
+
+
+@gql.django.filter(emojis_models.TgMessageReplies, lookups=True)
+class TgMessageRepliesFilters:
+
+    id: gql.auto
+    message_views: Optional['TgMessageViewsFilters']
+    comments: gql.auto
+    replies: gql.auto
+    replies_pts: gql.auto
+    recent_repliers: Optional['TgInputPeerFilters']
+    channel: Optional['TgChatFilters']
+    max: Optional['TgMessageFilters']
+    read_max: Optional['TgMessageFilters']
+
+
 @gql.django.filter(emojis_models.TgMessage, lookups=True)
 class TgMessageFilters:
 

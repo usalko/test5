@@ -24,7 +24,7 @@ class TgMessageReplies(models.Model):
     replies_pts = models.IntegerField(
         'PTS of the message that started this thread.')
 
-    recent_repliers = models.ManyToManyField[TgInputPeer](
+    recent_repliers = models.ManyToManyField(
         TgInputPeer,
         blank=True,
         related_name='tg_message_replies_tg_input_peer',
@@ -41,8 +41,8 @@ class TgMessageReplies(models.Model):
         help_text='For channel post comments, contains the ID of the associated discussion supergroup',
     )
 
-    _max_id: int
-    _max = models.ForeignKey[TgMessage](
+    max_id: int
+    max = models.ForeignKey[TgMessage](
         TgMessage,
         null=True,
         on_delete=models.PROTECT,
