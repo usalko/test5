@@ -8,22 +8,24 @@ import {
     DrawerHeader,
     DrawerOverlay,
     Hide,
+    Box,
+    Text,
     chakra,
     useDisclosure,
-    Link,
     Flex,
     HStack,
 } from '@chakra-ui/react'
-import { ExternalLinkIcon, HamburgerIcon } from '@chakra-ui/icons'
+import { HamburgerIcon } from '@chakra-ui/icons'
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, Link } from 'react-router-dom'
 import { Logo } from '../Logo'
 
 export interface NavigatorProps {
     className?: string
+    outletSpace?: number
 }
 
-export const Navigator: React.FC<NavigatorProps> = ({ className = '' }) => {
+export const Navigator: React.FC<NavigatorProps> = ({ className, outletSpace }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = React.useRef<HTMLButtonElement>(null)
@@ -39,12 +41,14 @@ export const Navigator: React.FC<NavigatorProps> = ({ className = '' }) => {
                 >
                     <Hide below='md'>
                         <HStack as="nav" spacing="5">
-                            <Button ref={btnRef} onClick={onOpen}>
-                                <Logo boxSize="26px" />
-                            </Button>
+                            <Link to='/'>
+                                <Button>
+                                    <Logo boxSize="26px" />
+                                </Button>
+                            </Link>
 
-                            <Link key="reactions">
-                                <Button variant="nav"> Reactions </Button>
+                            <Link to='/reactions'>
+                                <Button>Реакции</Button>
                             </Link>
                         </HStack>
                     </Hide>
@@ -61,11 +65,18 @@ export const Navigator: React.FC<NavigatorProps> = ({ className = '' }) => {
                             <DrawerOverlay />
                             <DrawerContent>
                                 <DrawerCloseButton />
-                                <DrawerHeader>Прототип</DrawerHeader>
+                                <DrawerHeader>
+                                    <Link to='/' onClick={onClose}>
+                                        <HStack>
+                                            <Logo boxSize="26px" />
+                                            <Text>Прототип аналитики канала</Text>
+                                        </HStack>
+                                    </Link>
+                                </DrawerHeader>
 
                                 <DrawerBody>
-                                    <Link href='/reactions' isExternal>
-                                        Реакции <ExternalLinkIcon mx='2px' />
+                                    <Link to='/reactions'>
+                                        <Button onClick={onClose}>Реакции</Button>
                                     </Link>
                                 </DrawerBody>
 
@@ -75,7 +86,9 @@ export const Navigator: React.FC<NavigatorProps> = ({ className = '' }) => {
                     </Hide>
                 </Flex>
             </chakra.header>
-            <Outlet />
+            <Box m={outletSpace}>
+                <Outlet />
+            </Box>
         </div>
     )
 }

@@ -7,7 +7,7 @@ export interface StartPageProps {
 
 export const StartPage: React.FC<StartPageProps> = ({ className = '' }) => (
     <div className={className}>
-        <Stack spacing={3}>
+        <Stack spacing={3} width='50%'>
             <Heading fontSize='md'>Прототип аналитики канала.</Heading>
             <Text fontSize='md'>Для перехода на dashboard, используйте кнопку с названием или пункт бургер меню на мобильных устройствах.</Text>
         </Stack>

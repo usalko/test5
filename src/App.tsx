@@ -16,7 +16,7 @@ export const App = () => (
       <ApolloProvider client={client}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Navigator />}>
+            <Route path="/" element={<Navigator outletSpace={5} />}>
               <Route index element={<StartPage />} />
               <Route path="/reactions" element={<ReactionsDashboard />} />
             </Route>
