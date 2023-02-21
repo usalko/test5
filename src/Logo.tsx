@@ -1,17 +1,14 @@
 import * as React from "react"
-import { Image } from '@chakra-ui/react'
-import {ReactComponent as SvgLogo} from './logo.svg'
+import { ReactComponent as StaticLogo } from './logo.svg'
 
 
 export interface LogoProps {
   className?: string
-  boxSize?: string
 }
 
 
-export const Logo: React.FC<LogoProps> = ({ className, boxSize }) => {
+export const Logo: React.FC<LogoProps> = ({ className }) => {
   return (
-    // <Image className={className} boxSize={boxSize} objectFit='cover' src={logo} alt='logo' />
-    <SvgLogo />
+    <StaticLogo height='24px' width='24px' className={className} />
   )
 }
