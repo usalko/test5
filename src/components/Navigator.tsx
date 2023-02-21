@@ -14,9 +14,10 @@ import {
     useDisclosure,
     Flex,
     HStack,
+    Heading,
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
-import React, { useEffect } from 'react'    
+import React, { useEffect } from 'react'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { Logo } from '../Logo'
 
@@ -33,7 +34,7 @@ export const Navigator: React.FC<NavigatorProps> = ({ className, outletSpace }) 
 
     useEffect(() => {
         document.title = state?.title || 'Общая ниформация'
-    })
+    }, [state])
 
     return (
 
@@ -43,6 +44,21 @@ export const Navigator: React.FC<NavigatorProps> = ({ className, outletSpace }) 
                     w="100%"
                     align="center"
                     justify="space-between"
+                    position='absolute'
+                    p={3}
+                    zIndex={0}
+                >
+                    <HStack flex='1' justifyContent='center'>
+                        <Heading as='h1' size='sm'>{state?.title || 'Общая ниформация'}</Heading>
+                    </HStack>
+
+                </Flex>
+
+                <Flex
+                    w="100%"
+                    align="center"
+                    justify="space-between"
+                    zIndex={10}
                 >
                     <Hide below='md'>
                         <HStack as="nav" spacing="5">
@@ -52,7 +68,7 @@ export const Navigator: React.FC<NavigatorProps> = ({ className, outletSpace }) 
                                 </Button>
                             </Link>
 
-                            <Link to='/reactions' state={{ title: 'Реакции' }}>
+                            <Link to='/reactions' state={{ title: 'Анализ реакций' }}>
                                 <Button>Реакции</Button>
                             </Link>
                         </HStack>
@@ -80,7 +96,7 @@ export const Navigator: React.FC<NavigatorProps> = ({ className, outletSpace }) 
                                 </DrawerHeader>
 
                                 <DrawerBody>
-                                    <Link to='/reactions' state={{ title: 'Реакции' }}>
+                                    <Link to='/reactions' state={{ title: 'Анализ реакций' }}>
                                         <Button onClick={onClose}>Реакции</Button>
                                     </Link>
                                 </DrawerBody>
@@ -89,10 +105,6 @@ export const Navigator: React.FC<NavigatorProps> = ({ className, outletSpace }) 
                             </DrawerContent>
                         </Drawer>
                     </Hide>
-
-                    <HStack flex='1' justifyContent='center' pr='24px'>
-                        <Text>{state?.title || 'Общая ниформация'}</Text>
-                    </HStack>
                 </Flex>
             </chakra.header>
             <Box m={outletSpace}>
