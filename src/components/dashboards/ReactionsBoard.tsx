@@ -19,7 +19,7 @@ export const ReactionsBoard: React.FC<ReactionsBoardProps> = ({ className = '' }
                         <Text w='100%' align='left'>Всего за месяц</Text>
                         <Spacer />
                         <PieChart options={{
-                            labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+                            labels: ['\u{1F600}', '\u{1F603}', '\u{1F604}', '\u{1F601}', '\u{1F606}'],
                             responsive: [{
                                 breakpoint: 480,
                                 options: {
@@ -60,10 +60,14 @@ export const ReactionsBoard: React.FC<ReactionsBoardProps> = ({ className = '' }
                                 colors: ['#fff']
                             },
                             xaxis: {
-                                categories: [2008, 2009, 2010, 2011, 2012, 2013, 2014],
+                                categories: ['2023-02-23T00:00', '2023-02-23T01:00', '2023-02-23T02:00', '2023-02-23T03:00', '2023-02-23T04:00',
+                                    '2023-02-23T05:00', '2023-02-23T06:00', '2023-02-23T07:00', '2023-02-23T08:00', '2023-02-23T09:00',
+                                    '2023-02-23T10:00', '2023-02-23T11:00', '2023-02-23T12:00', '2023-02-23T13:00', '2023-02-23T14:00',
+                                    '2023-02-23T15:00', '2023-02-23T16:00', '2023-02-23T17:00', '2023-02-23T18:00', '2023-02-23T19:00',
+                                    '2023-02-23T20:00', '2023-02-23T21:00', '2023-02-23T22:00', '2023-02-23T23:00', '2023-02-24T00:00'],
                                 labels: {
                                     formatter: function (val: any) {
-                                        return val + "K"
+                                        return `${(new Date(val)).getHours()}`.padStart(2, '0')
                                     }
                                 }
                             },
@@ -75,7 +79,7 @@ export const ReactionsBoard: React.FC<ReactionsBoardProps> = ({ className = '' }
                             tooltip: {
                                 y: {
                                     formatter: function (val: any) {
-                                        return val + "K"
+                                        return val + 'ч'
                                     }
                                 }
                             },
@@ -88,20 +92,40 @@ export const ReactionsBoard: React.FC<ReactionsBoardProps> = ({ className = '' }
                                 offsetX: 40
                             }
                         }} series={[{
-                            name: 'Marine Sprite',
-                            data: [44, 55, 41, 37, 22, 43, 21]
+                            name: '\u{1F600}',
+                            data: [0, 0, 0, 0, 0,
+                                0, 0, 3, 0, 0,
+                                0, 2, 0, 0, 0,
+                                0, 0, 0, 1, 0,
+                                0, 0, 8, 0, 0]
                         }, {
-                            name: 'Striking Calf',
-                            data: [53, 32, 33, 52, 13, 43, 32]
+                            name: '\u{1F603}',
+                            data: [0, 0, 0, 0, 0,
+                                0, 0, 2, 0, 0,
+                                0, 1, 0, 0, 0,
+                                0, 0, 1, 0, 0,
+                                0, 0, 0, 3, 0]
                         }, {
-                            name: 'Tank Picture',
-                            data: [12, 17, 11, 9, 15, 11, 20]
+                            name: '\u{1F604}',
+                            data: [0, 0, 1, 0, 0,
+                                0, 0, 2, 0, 0,
+                                0, 3, 0, 0, 0,
+                                0, 0, 0, 5, 0,
+                                0, 0, 1, 0, 0]
                         }, {
-                            name: 'Bucket Slope',
-                            data: [9, 7, 5, 8, 6, 9, 4]
+                            name: '\u{1F601}',
+                            data: [1, 0, 0, 0, 0,
+                                0, 0, 0, 0, 0,
+                                0, 0, 0, 1, 0,
+                                0, 0, 0, 0, 0,
+                                0, 0, 0, 0, 1]
                         }, {
-                            name: 'Reborn Kid',
-                            data: [25, 12, 19, 32, 25, 24, 10]
+                            name: '\u{1F606}',
+                            data: [0, 0, 0, 0, 0,
+                                0, 3, 0, 0, 0,
+                                0, 0, 0, 4, 0,
+                                0, 2, 0, 0, 0,
+                                0, 0, 0, 1, 0]
                         }]} width='100%' />
                     </VStack>
                 </Flex>
@@ -109,7 +133,18 @@ export const ReactionsBoard: React.FC<ReactionsBoardProps> = ({ className = '' }
                     <VStack flex='1'>
                         <Text w='100%' alignContent='left'>Статистика</Text>
                         <Spacer />
-                        <DataTable w='100%' />
+                        <DataTable w='100%' columns={[
+                            {title: 'ID сообщения'},
+                            {title: '@Валера'},
+                            {title: '@Юра'},
+                            {title: '@Глеб'},
+                        ]} data={[
+                            {values: ['123476538624', '\u{1F606}', '', '']},
+                            {values: ['249762969696', '', '\u{1F601}', '\u{1F600}']},
+                            {values: ['659296476966', '', '\u{1F604}', '']},
+                            {values: ['834656245969', '\u{1F603}', '', '']},
+                            {values: ['873469629369', '', '', '\u{1F606}']},
+                            ]} />
                     </VStack>
                 </Flex>
             </VStack>

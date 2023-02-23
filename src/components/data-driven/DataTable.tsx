@@ -1,44 +1,49 @@
 import { Table, TableContainer, TableContainerProps, Tbody, Td, Tfoot, Th, Thead, Tr } from '@chakra-ui/react'
 import React from 'react'
+import { purifyProps } from '../../utils/purify-props'
+import { DataTableColumn } from './DataTableColumn'
+import { DataTableRow } from './DataTableRow'
 
 export interface DataTableProps extends TableContainerProps {
     className?: string
+    columns: DataTableColumn[]
+    data: DataTableRow[]
 }
 
 export const DataTable: React.FC<DataTableProps> = (props) => {
 
     return (
-        <TableContainer {...props}>
+        <TableContainer {...purifyProps(props, ['columns', 'data'])}>
             <Table size='sm'>
                 <Thead>
                     <Tr>
-                        <Th>To convert</Th>
-                        <Th>into</Th>
-                        <Th isNumeric>multiply by</Th>
+                        {props.columns.map((column, index) => {
+                            return (
+                                <Th>{column.title}</Th>
+                            )
+                        })}
                     </Tr>
                 </Thead>
                 <Tbody>
-                    <Tr>
-                        <Td>inches</Td>
-                        <Td>millimetres (mm)</Td>
-                        <Td isNumeric>25.4</Td>
-                    </Tr>
-                    <Tr>
-                        <Td>feet</Td>
-                        <Td>centimetres (cm)</Td>
-                        <Td isNumeric>30.48</Td>
-                    </Tr>
-                    <Tr>
-                        <Td>yards</Td>
-                        <Td>metres (m)</Td>
-                        <Td isNumeric>0.91444</Td>
-                    </Tr>
+                    {props.data.map((row, rowIndex) => {
+                        return (
+                            <Tr>
+                                {row.values.map((value, columnIndex) => {
+                                    return (
+                                        <Td>{value}</Td>
+                                    )
+                                })}
+                            </Tr>
+                        )
+                    })}
                 </Tbody>
                 <Tfoot>
                     <Tr>
-                        <Th>To convert</Th>
-                        <Th>into</Th>
-                        <Th isNumeric>multiply by</Th>
+                        {props.columns.map((column, index) => {
+                            return (
+                                <Th>{column.title}</Th>
+                            )
+                        })}
                     </Tr>
                 </Tfoot>
             </Table>
