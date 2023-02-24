@@ -5,7 +5,7 @@ from .tg_input_peer import TgInputPeer
 
 class TgMessageViews(models.Model):
     
-    stamp = models.DateTimeField('Datetime of reaction request')
+    stamp = models.DateTimeField('Datetime of message views request')
 
     peer_id: int
     peer = models.ForeignKey[TgInputPeer](

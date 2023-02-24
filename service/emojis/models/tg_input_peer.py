@@ -53,7 +53,7 @@ class TgInputPeer(models.Model):
         help_text='Defines a channel for further interaction.',
         null=True
     )
-    access_hash: models.IntegerField(
+    access_hash = models.IntegerField(
         'Access hash for “user” or “channel” access type')
 
     peer_id: int
