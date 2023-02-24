@@ -1,10 +1,25 @@
-import { Table, TableContainer, TableContainerProps, Tbody, Td, Tfoot, Th, Thead, Tr } from '@chakra-ui/react'
+import {
+    Flex,
+    FlexProps,
+    Slider,
+    SliderFilledTrack,
+    SliderThumb,
+    SliderTrack,
+    Table,
+    TableContainer,
+    Tbody,
+    Td,
+    Tfoot,
+    Th,
+    Thead,
+    Tr
+} from '@chakra-ui/react'
 import React from 'react'
 import { purifyProps } from '../../utils/purify-props'
 import { DataTableColumn } from './DataTableColumn'
 import { DataTableRow } from './DataTableRow'
 
-export interface DataTableProps extends TableContainerProps {
+export interface DataTableProps extends FlexProps {
     className?: string
     columns: DataTableColumn[]
     data: DataTableRow[]
@@ -13,39 +28,54 @@ export interface DataTableProps extends TableContainerProps {
 export const DataTable: React.FC<DataTableProps> = (props) => {
 
     return (
-        <TableContainer {...purifyProps(props, ['columns', 'data'])}>
-            <Table size='sm'>
-                <Thead>
-                    <Tr>
-                        {props.columns.map((column, index) => {
+        <Flex {...purifyProps(props, ['columns', 'data'])}>
+            <TableContainer flex='1'>
+                <Table size='sm'>
+                    <Thead>
+                        <Tr>
+                            {props.columns.map((column, index) => {
+                                return (
+                                    <Th>{column.title}</Th>
+                                )
+                            })}
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {props.data.map((row, rowIndex) => {
                             return (
-                                <Th>{column.title}</Th>
+                                <Tr>
+                                    {row.values.map((value, columnIndex) => {
+                                        return (
+                                            <Td>{value}</Td>
+                                        )
+                                    })}
+                                </Tr>
                             )
                         })}
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {props.data.map((row, rowIndex) => {
-                        return (
-                            <Tr>
-                                {row.values.map((value, columnIndex) => {
-                                    return (
-                                        <Td>{value}</Td>
-                                    )
-                                })}
-                            </Tr>
-                        )
-                    })}
-                </Tbody>
-                <Tfoot>
-                    <Tr>
-                        {props.columns.map((column, index) => {
-                            return (
-                                <Th>{column.title}</Th>
-                            )
-                        })}
-                    </Tr>
-                </Tfoot>
-            </Table>
-        </TableContainer>)
+                    </Tbody>
+                    <Tfoot>
+                        <Tr>
+                            {props.columns.map((column, index) => {
+                                return (
+                                    <Th>{column.title}</Th>
+                                )
+                            })}
+                        </Tr>
+                    </Tfoot>
+                </Table>
+            </TableContainer>
+            <Slider
+                aria-label='slider-ex-3'
+                defaultValue={30}
+                orientation='vertical'
+                minH='32'
+            >
+                <SliderTrack>
+                    <SliderFilledTrack />
+                </SliderTrack>
+                <SliderThumb />
+            </Slider>
+
+        </Flex>
+    )
 }
