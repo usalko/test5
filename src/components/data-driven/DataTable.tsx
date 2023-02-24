@@ -35,7 +35,7 @@ export const DataTable: React.FC<DataTableProps> = (props) => {
                         <Tr>
                             {props.columns.map((column, index) => {
                                 return (
-                                    <Th>{column.title}</Th>
+                                    <Th key={index}>{column.title}</Th>
                                 )
                             })}
                         </Tr>
@@ -43,10 +43,10 @@ export const DataTable: React.FC<DataTableProps> = (props) => {
                     <Tbody>
                         {props.data.map((row, rowIndex) => {
                             return (
-                                <Tr>
+                                <Tr key={rowIndex}>
                                     {row.values.map((value, columnIndex) => {
                                         return (
-                                            <Td>{value}</Td>
+                                            <Td key={columnIndex}>{value}</Td>
                                         )
                                     })}
                                 </Tr>
@@ -57,7 +57,7 @@ export const DataTable: React.FC<DataTableProps> = (props) => {
                         <Tr>
                             {props.columns.map((column, index) => {
                                 return (
-                                    <Th>{column.title}</Th>
+                                    <Th key={index}>{column.title}</Th>
                                 )
                             })}
                         </Tr>

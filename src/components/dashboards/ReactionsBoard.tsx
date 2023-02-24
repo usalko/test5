@@ -24,20 +24,18 @@ export const ReactionsBoard: React.FC<ReactionsBoardProps> = ({ className = '' }
                                 breakpoint: 480,
                                 options: {
                                     legend: {
-                                        position: 'bottom'
+                                        position: 'top'
                                     }
                                 }
                             }]
                         }}
                             series={[44, 55, 13, 43, 22]} width='100%' />
                     </VStack>
-                    <VStack flex='1' alignContent='left' pb={2}>
+                    <VStack flex={{base: 1, lg: 2, xl: 2, '2xl': 2}} alignContent='left' pb={2}>
                         <Text w='100%' align='left'>По времени</Text>
                         <Spacer />
                         <BarChart options={{
                             chart: {
-                                type: 'bar',
-                                height: 350,
                                 stacked: true,
                             },
                             plotOptions: {
