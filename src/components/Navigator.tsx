@@ -33,7 +33,7 @@ export const Navigator: React.FC<NavigatorProps> = ({ className, outletSpace }) 
     const { state } = useLocation()
 
     useEffect(() => {
-        document.title = state?.title || 'Общая ниформация'
+        document.title = state?.title || 'Общая информация'
     }, [state])
 
     return (

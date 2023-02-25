@@ -20,14 +20,9 @@ export const ReactionsBoard: React.FC<ReactionsBoardProps> = ({ className = '' }
                         <Spacer />
                         <PieChart options={{
                             labels: ['\u{1F600}', '\u{1F603}', '\u{1F604}', '\u{1F601}', '\u{1F606}'],
-                            responsive: [{
-                                breakpoint: 480,
-                                options: {
-                                    legend: {
-                                        position: 'top'
-                                    }
-                                }
-                            }]
+                            legend: {
+                                fontSize: '32px'
+                            },
                         }}
                             series={[44, 55, 13, 43, 22]} width='100%' />
                     </VStack>
