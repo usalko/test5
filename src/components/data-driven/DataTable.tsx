@@ -1,11 +1,6 @@
 import {
-    Flex,
-    FlexProps,
-    Slider,
-    SliderFilledTrack,
-    SliderThumb,
-    SliderTrack,
-    Table,
+    Button, Flex,
+    FlexProps, Table,
     TableContainer,
     Tbody,
     Td,
@@ -17,20 +12,26 @@ import {
 import React from 'react'
 import { purifyProps } from '../../utils/purify-props'
 import { DataTableColumn } from './DataTableColumn'
+import { pageCursor } from './DataTablePageCursor'
+import { DataTableRequest } from './DataTableRequest'
 import { DataTableRow } from './DataTableRow'
+import { DataTableSlider } from './DataTableSlider'
 
 export interface DataTableProps extends FlexProps {
     className?: string
     columns: DataTableColumn[]
-    data: DataTableRow[]
+    data: DataTableRow[] | DataTableRequest
+    pageSize?: number
 }
 
 export const DataTable: React.FC<DataTableProps> = (props) => {
 
+    const cursor = pageCursor(props.data, props.pageSize)
+
     return (
-        <Flex {...purifyProps(props, ['columns', 'data'])}>
+        <Flex {...purifyProps(props, ['columns', 'data', 'pageSize'])}>
             <TableContainer flex='1'>
-                <Table size='sm'>
+                <Table size='sm' w='100%'>
                     <Thead>
                         <Tr>
                             {props.columns.map((column, index) => {
@@ -41,7 +42,10 @@ export const DataTable: React.FC<DataTableProps> = (props) => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {props.data.map((row, rowIndex) => {
+                        {cursor.hasPrevPage ? (<Tr>
+                            <Td colSpan={props.columns.length}><Button h={4} w='100%'>Предыдущая страница</Button></Td>
+                        </Tr>) : ''}
+                        {cursor.pageData.map((row, rowIndex) => {
                             return (
                                 <Tr key={rowIndex}>
                                     {row.values.map((value, columnIndex) => {
@@ -52,6 +56,9 @@ export const DataTable: React.FC<DataTableProps> = (props) => {
                                 </Tr>
                             )
                         })}
+                        {cursor.hasNextPage ? (<Tr>
+                            <Td colSpan={props.columns.length}><Button h={4} w='100%'>Следующая страница</Button></Td>
+                        </Tr>) : ''}
                     </Tbody>
                     <Tfoot>
                         <Tr>
@@ -64,18 +71,11 @@ export const DataTable: React.FC<DataTableProps> = (props) => {
                     </Tfoot>
                 </Table>
             </TableContainer>
-            <Slider
-                aria-label='slider-ex-3'
-                defaultValue={30}
+            <DataTableSlider defaultValue={30}
                 orientation='vertical'
                 minH='32'
-            >
-                <SliderTrack>
-                    <SliderFilledTrack />
-                </SliderTrack>
-                <SliderThumb />
-            </Slider>
-
+                h='auto'
+            />
         </Flex>
     )
 }

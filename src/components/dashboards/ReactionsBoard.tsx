@@ -31,7 +31,7 @@ export const ReactionsBoard: React.FC<ReactionsBoardProps> = ({ className = '' }
                         }}
                             series={[44, 55, 13, 43, 22]} width='100%' />
                     </VStack>
-                    <VStack flex={{base: 1, lg: 2, xl: 2, '2xl': 2}} alignContent='left' pb={2}>
+                    <VStack flex={{ base: 1, lg: 2, xl: 2, '2xl': 2 }} alignContent='left' pb={2}>
                         <Text w='100%' align='left'>По времени</Text>
                         <Spacer />
                         <BarChart options={{
@@ -127,24 +127,29 @@ export const ReactionsBoard: React.FC<ReactionsBoardProps> = ({ className = '' }
                         }]} width='100%' />
                     </VStack>
                 </Flex>
-                <Flex w='100%'>
-                    <VStack flex='1'>
-                        <Text w='100%' alignContent='left'>Статистика</Text>
-                        <Spacer />
-                        <DataTable w='100%' columns={[
-                            {title: 'ID сообщения'},
-                            {title: '@Валера'},
-                            {title: '@Юра'},
-                            {title: '@Глеб'},
-                        ]} data={[
-                            {values: ['123476538624', '\u{1F606}', '', '']},
-                            {values: ['249762969696', '', '\u{1F601}', '\u{1F600}']},
-                            {values: ['659296476966', '', '\u{1F604}', '']},
-                            {values: ['834656245969', '\u{1F603}', '', '']},
-                            {values: ['873469629369', '', '', '\u{1F606}']},
-                            ]} />
-                    </VStack>
-                </Flex>
+                <VStack w='100%' >
+                    <Text w='100%' alignContent='left'>Статистика</Text>
+                    <Spacer />
+                    <DataTable w='100%' columns={[
+                        { title: 'ID сообщения' },
+                        { title: '@Валера' },
+                        { title: '@Юра' },
+                        { title: '@Глеб' },
+                    ]} data={[
+                        { values: ['123476538624', '\u{1F606}', '', ''] },
+                        { values: ['249762969696', '', '\u{1F601}', '\u{1F600}'] },
+                        { values: ['659296476966', '', '\u{1F604}', ''] },
+                        { values: ['834656245969', '\u{1F603}', '', ''] },
+                        { values: ['873469629369', '\u{1F604}', '', '\u{1F606}'] },
+                        { values: ['349879837498', '', '', '\u{1F601}'] },
+                        { values: ['084375084357', '\u{1F601}', '', '\u{1F604}'] },
+                        { values: ['094590845305', '\u{1F600}', '\u{1F604}', ''] },
+                        { values: ['234098092845', '', '', '\u{1F601}'] },
+                        { values: ['049394038555', '', '\u{1F606}', '\u{1F600}'] },
+                        { values: ['968002808085', '\u{1F604}', '\u{1F600}', ''] },
+                        { values: ['108458839050', '', '\u{1F601}', ''] },
+                    ]} />
+                </VStack>
             </VStack>
         </div>
     )

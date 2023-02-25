@@ -49,7 +49,7 @@ export const Navigator: React.FC<NavigatorProps> = ({ className, outletSpace }) 
                     zIndex={0}
                 >
                     <HStack flex='1' justifyContent='center'>
-                        <Heading as='h1' size='sm'>{state?.title || 'Общая ниформация'}</Heading>
+                        <Heading as='h1' size='sm'>{state?.title || 'Общая информация'}</Heading>
                     </HStack>
 
                 </Flex>
