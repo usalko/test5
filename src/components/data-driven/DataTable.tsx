@@ -9,13 +9,13 @@ import {
     Thead,
     Tr
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { purifyProps } from '../../utils/purify-props'
 import { DataTableColumn } from './DataTableColumn'
-import { pageCursor } from './DataTablePageCursor'
+import { DataTablePageCursor, pageCursor } from './DataTablePageCursor'
 import { DataTableRequest } from './DataTableRequest'
 import { DataTableRow } from './DataTableRow'
-import { DataTableSlider } from './DataTableSlider'
+import { DataTableSlider as DataTablePageSlider } from './DataTablePageSlider'
 
 export interface DataTableProps extends FlexProps {
     className?: string
@@ -26,7 +26,8 @@ export interface DataTableProps extends FlexProps {
 
 export const DataTable: React.FC<DataTableProps> = (props) => {
 
-    const cursor = pageCursor(props.data, props.pageSize)
+    const [{ pageData, hasNextPage, hasPrevPage, pageSize, pageIndex, totalCount },
+        setCursor] = useState<DataTablePageCursor>(pageCursor(props.data, props.pageSize))
 
     return (
         <Flex {...purifyProps(props, ['columns', 'data', 'pageSize'])}>
@@ -42,10 +43,13 @@ export const DataTable: React.FC<DataTableProps> = (props) => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {cursor.hasPrevPage ? (<Tr>
-                            <Td colSpan={props.columns.length}><Button h={4} w='100%'>Предыдущая страница</Button></Td>
-                        </Tr>) : ''}
-                        {cursor.pageData.map((row, rowIndex) => {
+                        <Tr>
+                            <Td colSpan={props.columns.length} p={0} border={0}>
+                                <Button h={4} w='100%' visibility={hasPrevPage ? 'visible' : 'hidden'}
+                                    onClick={async () => setCursor((cursor) => { return { ...cursor.prevPage(cursor) } })}>
+                                    Предыдущая страница</Button></Td>
+                        </Tr>
+                        {pageData.map((row, rowIndex) => {
                             return (
                                 <Tr key={rowIndex}>
                                     {row.values.map((value, columnIndex) => {
@@ -56,9 +60,23 @@ export const DataTable: React.FC<DataTableProps> = (props) => {
                                 </Tr>
                             )
                         })}
-                        {cursor.hasNextPage ? (<Tr>
-                            <Td colSpan={props.columns.length}><Button h={4} w='100%'>Следующая страница</Button></Td>
-                        </Tr>) : ''}
+                        {pageData.length < pageSize ? [...Array(pageSize - pageData.length)].map((_, rowIndex) => {
+                            return (
+                                <Tr key={rowIndex}>
+                                    {props.columns.map((_, columnIndex) => {
+                                        return (
+                                            <Td key={columnIndex} >&nbsp;</Td>
+                                        )
+                                    })}
+                                </Tr>
+                            )
+                        }) : ''}
+                        <Tr>
+                            <Td colSpan={props.columns.length} p={0} border={0}>
+                                <Button h={4} w='100%' visibility={hasNextPage ? 'visible' : 'hidden'}
+                                    onClick={async () => setCursor((cursor) => { return { ...cursor.nextPage(cursor) } })}>
+                                    Следующая страница</Button></Td>
+                        </Tr>
                     </Tbody>
                     <Tfoot>
                         <Tr>
@@ -71,10 +89,15 @@ export const DataTable: React.FC<DataTableProps> = (props) => {
                     </Tfoot>
                 </Table>
             </TableContainer>
-            <DataTableSlider defaultValue={30}
+            <DataTablePageSlider
                 orientation='vertical'
                 minH='32'
                 h='auto'
+                isReversed={true}
+                max={totalCount}
+                step={pageSize}
+                min={0}
+                value={(pageIndex + 1) * pageSize}
             />
         </Flex>
     )
