@@ -1,5 +1,7 @@
-import { Box, Flex, Spacer, Text, VStack } from '@chakra-ui/react'
-import React from 'react'
+import { useLazyQuery } from '@apollo/client'
+import { Flex, Spacer, Text, VStack } from '@chakra-ui/react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { GET_REACTIONS_USERS, _nodeToReactionUser } from '../../apollo/get-tg-reactions-users'
 import { DataTable } from '../data-driven/DataTable'
 import { BarChart } from '../gears/BarChart'
 import { PieChart } from '../gears/PieChart'
@@ -9,7 +11,28 @@ export interface ReactionsBoardProps {
     className?: string
 }
 
+interface ReactionsBoardState {
+    reactionsUsers: string[]
+}
+
 export const ReactionsBoard: React.FC<ReactionsBoardProps> = ({ className = '' }) => {
+
+    const [{reactionsUsers}, setState] = useState<ReactionsBoardState>({
+        reactionsUsers: []
+    })
+
+    // COLUMNS for statistics
+    const [getReactionsUsers] = useLazyQuery(GET_REACTIONS_USERS)
+
+    const fetchReactionsUsers = useCallback(async () => {
+        getReactionsUsers().then((result) => {
+            setState((state) => { return { ...state, reactionsUsers: [...(result.data?.tgReactions.map((node: any) => _nodeToReactionUser(node)) || [])] } })
+        })
+    }, [getReactionsUsers])
+
+    useEffect(() => {
+        fetchReactionsUsers().catch(console.error)
+    }, [fetchReactionsUsers])
 
     return (
         <div className={className}>
@@ -127,23 +150,8 @@ export const ReactionsBoard: React.FC<ReactionsBoardProps> = ({ className = '' }
                     <Spacer />
                     <DataTable w='100%' columns={[
                         { title: 'ID сообщения' },
-                        { title: '@Валера' },
-                        { title: '@Юра' },
-                        { title: '@Глеб' },
-                    ]} data={[
-                        { values: ['123476538624', '\u{1F606}', '', ''] },
-                        { values: ['249762969696', '', '\u{1F601}', '\u{1F600}'] },
-                        { values: ['659296476966', '', '\u{1F604}', ''] },
-                        { values: ['834656245969', '\u{1F603}', '', ''] },
-                        { values: ['873469629369', '\u{1F604}', '', '\u{1F606}'] },
-                        { values: ['349879837498', '', '', '\u{1F601}'] },
-                        { values: ['084375084357', '\u{1F601}', '', '\u{1F604}'] },
-                        { values: ['094590845305', '\u{1F600}', '\u{1F604}', ''] },
-                        { values: ['234098092845', '', '', '\u{1F601}'] },
-                        { values: ['049394038555', '', '\u{1F606}', '\u{1F600}'] },
-                        { values: ['968002808085', '\u{1F604}', '\u{1F600}', ''] },
-                        { values: ['108458839050', '', '\u{1F601}', ''] },
-                    ]} />
+                        ...reactionsUsers.map((firstName: string) => { return { title: firstName}})
+                    ]} data={[]} />
                 </VStack>
             </VStack>
         </div>
