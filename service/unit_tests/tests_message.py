@@ -35,7 +35,7 @@ class TestsMessage(SnapshotDatabaseStateTestCase):
         TgChat.objects.create(type=TgChat.ChatType.PRIVATE,
                               title='simple private chat')
 
-        emoticons = ['\u1F600', '\u1F603', '\u1F604', '\u1F601', '\u1F606']
+        emoticons = ['\U0001F600', '\U0001F603', '\U0001F604', '\U0001F601', '\U0001F606']
 
         for i in range(0, 100):
             message = TgMessage.objects.create(stamp=datetime.utcnow(),
