@@ -8,7 +8,7 @@ from strawberry_django_plus.optimizer import DjangoOptimizerExtension
 
 from .filters import *
 from .order import *
-from .groups import *
+from .aggregations import *
 from .types import *
 
 
@@ -43,9 +43,9 @@ class Query:
         filters=TgMessageFilters, order=TgMessageOrder)
 
     tg_reactions: List[TgReaction] = gql.django.field(
-        filters=TgReactionFilters, order=TgReactionOrder, groups=TgReactionGroups, pagination=True)
+        filters=TgReactionFilters, order=TgReactionOrder, aggregations=TgReactionAggregations, pagination=True)
     tg_reactions_relay_connection: relay.Connection[TgReaction] = gql.django.connection(
-        filters=TgReactionFilters, order=TgReactionOrder, groups=TgReactionGroups)
+        filters=TgReactionFilters, order=TgReactionOrder, aggregations=TgReactionAggregations)
 
     tg_users: List[TgUser] = gql.django.field(
         filters=TgUserFilters, order=TgUserOrder, pagination=True)
