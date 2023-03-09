@@ -1,5 +1,9 @@
 django
 django-cors-headers
 # TODO: Change the branch after finish development
-git+https://github.com/usalko/strawberry.git@fix-fields-order
+# < Direct dependencies
+# < typing-extensions
+# < git+https://github.com/usalko/graphql-core.git@fix-fields-order
+# < strawberry-graphql-django
+# git+https://github.com/usalko/strawberry.git@march23
 git+https://github.com/usalko/strawberry-django-plus.git@march23
