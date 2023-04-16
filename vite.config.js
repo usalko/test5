@@ -13,10 +13,20 @@ export default defineConfig(() => {
             svgr({ svgrOptions: { icon: true } }),
         ],
         server: {
-            port: 3000,
+            proxy: {
+                '/graph': {
+                    target: process.env.BACKEND_API_ENDPOINT || 'https://test5.qstand.art/',
+                    changeOrigin: true,
+                },
+                '/media': {
+                    target: process.env.BACKEND_API_ENDPOINT || 'https://test5.qstand.art/',
+                    changeOrigin: true,
+                },
+            },
             watch: {
                 usePolling: true,
             },
+            port: 3000,
         },
     }
 })
