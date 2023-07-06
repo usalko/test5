@@ -41,3 +41,6 @@ service/media/*
 
 auto_tests.*
 
+# Temporare artifacts for the quick development of strawberry components.
+strawberry
+strawberry_django_plus
