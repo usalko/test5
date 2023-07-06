@@ -1,11 +1,18 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 
 
 export const GET_REACTIONS_USERS = gql`query ReactionsUsersFirstNames {
-  tgReactions {
-    peer {
-      user {
-        firstName
+  tgReactions(aggregations: {
+    peer: {
+      user: {
+        username: CONCAT}},
+         emoticon: CONCAT}
+  ) {
+    message {
+      id
+      stamp
+      chat {
+        title
       }
     }
   }
