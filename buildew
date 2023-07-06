@@ -271,7 +271,7 @@ fi
 if [ "$COMMAND" == "restart" ]; then
     echo 'Restart services or whole system'
     stop "$@"
-    start "$@"
+    start "$@" &
 fi
 
 if [ "$COMMAND" == "publish" ]; then
